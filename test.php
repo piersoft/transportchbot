@@ -18,7 +18,7 @@ echo $test;
 //echo $test1;
 
 
-$test2=$data->get_connection("Parma","Bologna%20Centrale","2015-10-26");
+$test2=$data->get_connection("Parma","Bologna Centrale","2015-10-26");
 
 
 

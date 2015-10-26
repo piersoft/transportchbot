@@ -5,12 +5,14 @@ class getdata {
   //monitoraggio temperatura
 	public function get_connection($partenza,$destinazione,$data)
 	{
-$partenza=utf8_encode($partenza);
-$destinazione=utf8_encode($destinazione);
+$partenza1=str_replace(" ","%20",$partenza);
+$destinazione1=str_replace(" ","%20",$destinazione);
 echo $destinazione;
 echo $partenza;
-      $temp_c1="Ricerca delle prossime corse per raggiungere ".$destinazione." partendo da ".$partenza." in data ".$data."\n\n";
-			$json_string = file_get_contents("http://transport.opendata.ch/v1/connections?from=".$partenza."&to=".$destinazione."&date=".$data."&limit=6");
+
+
+      $temp_c1 ="Ricerca delle prossime corse per raggiungere ".$destinazione." partendo da ".$partenza." in data ".$data."\n\n";
+			$json_string = file_get_contents("http://transport.opendata.ch/v1/connections?from=".$partenza1."&to=".$destinazione1."&date=".$data."&limit=6");
 			$parsed_json = json_decode($json_string);
       $count=0;
       if ($parsed_json->{'connections'}[0]->{'from'}->{'station'}->{'name'} == NULL){
@@ -19,11 +21,11 @@ echo $partenza;
       foreach($parsed_json->{'connections'}[0]->{'from'}->{'station'} as $data=>$csv1){
     	   $count = $count+1;
     	}
-      echo "Count ante: ".$count;
+
       //$count=6;
     	for ($i=0;$i<=$count;$i++){
-  if ($parsed_json->{'connections'}[$i]->{'from'}->{'station'}){
-
+      if ($parsed_json->{'connections'}[$i]->{'from'}->{'station'}->{'name'}){
+      echo "parsed: ".$parsed_json->{'connections'}[$i]->{'to'}->{'station'}->{'name'};
       $h = "1";// Hour for time zone goes here e.g. +7 or -4, just remove the + or -
       $hm = $h * 60;
       $ms = $hm * 60;
@@ -40,8 +42,9 @@ echo $partenza;
       $temp_c1 .= " alle ore ".$timec."\n";
       $temp_c1 .= "Arrivo a ".$parsed_json->{'connections'}[$i]->{'to'}->{'station'}->{'name'};
       $temp_c1 .= " alle ore ".$timec2."\n\n";
-}
+
       }
+    }
 echo   $temp_c1;
 	   return $temp_c1;
 
