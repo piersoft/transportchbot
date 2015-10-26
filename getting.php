@@ -5,36 +5,42 @@ class getdata {
   //monitoraggio temperatura
 	public function get_connection($partenza,$destinazione,$data)
 	{
-
-      $temp_c1="Ricerca orari per raggiungere ".$destinazione." partendo da ".$partenza." in data ".$data."\n\n";
-			$json_string = file_get_contents("http://transport.opendata.ch/v1/connections?from=".$partenza."&to=".$destinazione."&date=".$date);
+$partenza=utf8_encode($partenza);
+$destinazione=utf8_encode($destinazione);
+echo $destinazione;
+echo $partenza;
+      $temp_c1="Ricerca delle prossime corse per raggiungere ".$destinazione." partendo da ".$partenza." in data ".$data."\n\n";
+			$json_string = file_get_contents("http://transport.opendata.ch/v1/connections?from=".$partenza."&to=".$destinazione."&date=".$data."&limit=6");
 			$parsed_json = json_decode($json_string);
       $count=0;
       if ($parsed_json->{'connections'}[0]->{'from'}->{'station'}->{'name'} == NULL){
         $temp_c1 .="Non ci sono stazioni";
       }
-      foreach($parsed_json->{'stations'} as $data=>$csv1){
+      foreach($parsed_json->{'connections'}[0]->{'from'}->{'station'} as $data=>$csv1){
     	   $count = $count+1;
     	}
-    	for ($i=0;$i<$count;$i++){
-        $h = "1";// Hour for time zone goes here e.g. +7 or -4, just remove the + or -
-        $hm = $h * 60;
-        $ms = $hm * 60;
-        date_default_timezone_set('UTC');
-          $time =$parsed_json->{'connections'}[$i]->{'from'}->{'departureTimestamp'}; //registro nel DB anche il tempo unix
-          $timef=floatval($time);
-          $timeff = time();
-          $timec =gmdate('H:i:s d-m-Y', $timef+$ms);
-          $time2 =$parsed_json->{'connections'}[$i]->{'to'}->{'arrivalTimestamp'}; //registro nel DB anche il tempo unix
-          $timef2=floatval($time2);
-          $timeff2 = time();
-          $timec2 =gmdate('H:i:s d-m-Y', $timef2+$ms);
-		//	$temp_c1 .= $parsed_json->{'stations'}[$i]->{'name'}." distante: ".$parsed_json->{'stations'}[$i]->{'distance'};
+      echo "Count ante: ".$count;
+      //$count=6;
+    	for ($i=0;$i<=$count;$i++){
+  if ($parsed_json->{'connections'}[$i]->{'from'}->{'station'}){
+
+      $h = "1";// Hour for time zone goes here e.g. +7 or -4, just remove the + or -
+      $hm = $h * 60;
+      $ms = $hm * 60;
+      date_default_timezone_set('UTC');
+      $time =$parsed_json->{'connections'}[$i]->{'from'}->{'departureTimestamp'}; //registro nel DB anche il tempo unix
+      $timef=floatval($time);
+      $timeff = time();
+      $timec =gmdate('H:i:s d-m-Y', $timef+$ms);
+      $time2 =$parsed_json->{'connections'}[$i]->{'to'}->{'arrivalTimestamp'}; //registro nel DB anche il tempo unix          $timef2=floatval($time2);
+      $timef2=floatval($time2);
+      $timeff2 = time();
+      $timec2 =gmdate('H:i:s d-m-Y', $timef2+$ms);
       $temp_c1 .= "Partenza da ".$parsed_json->{'connections'}[$i]->{'from'}->{'station'}->{'name'};
       $temp_c1 .= " alle ore ".$timec."\n";
       $temp_c1 .= "Arrivo a ".$parsed_json->{'connections'}[$i]->{'to'}->{'station'}->{'name'};
       $temp_c1 .= " alle ore ".$timec2."\n\n";
-
+}
       }
 echo   $temp_c1;
 	   return $temp_c1;

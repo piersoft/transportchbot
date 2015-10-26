@@ -86,7 +86,8 @@ const MAX_LENGTH = 4096;
 
         }else if (strpos($text,'%') !== false) {
           $option1= explode("%", $text);
-          $reply = $data->get_connection($option1[0],$option1[1],$option1[2]);
+
+          $reply = $data->get_connection(utf8_decode($option1[0]),utf8_decode($option1[1]),$option1[2]);
 
         }else {
         $reply = $data->get_start($text);

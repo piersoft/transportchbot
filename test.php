@@ -14,12 +14,12 @@ $test=$data->get_stations($lat,$lon);
 echo $test;
 */
 
-$test1=$data->get_start("Prato Borgonuovo");
-echo $test1;
+//$test1=$data->get_start("Prato Borgonuovo");
+//echo $test1;
 
 
-$test2=$data->get_connection("Lecce","Modena","2015-10-30");
-echo $test2;
+$test2=$data->get_connection("Parma","Bologna%20Centrale","2015-10-26");
+
 
 
 
