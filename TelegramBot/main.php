@@ -59,6 +59,13 @@ const MAX_LENGTH = 4096;
    $telegram->sendMessage($content);
    $log=$today. ";stazioneinfo sent;" .$chat_id. "\n";
  }
+ else if ($text == "/start"){
+
+   $reply = ("Benvenuto, chiedi pure");
+   $content = array('chat_id' => $chat_id, 'text' => $reply,'disable_web_page_preview'=>true);
+   $telegram->sendMessage($content);
+   $log=$today. ";start sent;" .$chat_id. "\n";
+ }
  else if ($text == "viaggio"){
 
    $reply = ("Scrivi stazionepartenza%stazionearrivo%data dove data è nel formato anno-mese-giorno. Per esempio: Lecce%Roma%2015-10-30");
@@ -68,7 +75,7 @@ const MAX_LENGTH = 4096;
  }
 			//crediti
 	elseif ($text == "/informazioni" || $text == "informazioni") {
-				 $reply = ("Transport CH Bot e' un servizio sperimentale e dimostrativo per orari, tratte e stazioni dei Trasporti Svizzeri, che rilasciano in licenza opendata tutti i propri dati. Tra le stazioni censite ci sono anche dati di stazioni italiane. Basta inviare la propria posizione (graffetta) ed avere la stazione più vicina e quindi tutti i prossimi treni in partenza");
+				 $reply = ("Transport CH Bot e' un servizio sperimentale e dimostrativo per orari, tratte e stazioni dei Trasporti Svizzeri, che rilasciano in licenza opendata tutti i propri dati. Tra le stazioni censite ci sono anche dati di stazioni italiane. Basta inviare la propria posizione (graffetta) ed avere la stazione più vicina e quindi tutti i prossimi treni in partenza. Puoi anche scrivere direttamente la stazione esempio Bari Centrale oppure se inserisci lo / hai tutte le fermate intermedie: esempio /Parma. Infine puoi controllare i treni tra due stazioni inserendo le stazioni separate da % e data. esempio << Parma%Bologna Centrale%2015-10-30 >> dove la data è inserita nel formato anno-mese-giorno");
 				 $content = array('chat_id' => $chat_id, 'text' => $reply,'disable_web_page_preview'=>true);
 				 $telegram->sendMessage($content);
 				 $log=$today. ";crediti sent;" .$chat_id. "\n";
@@ -86,7 +93,7 @@ const MAX_LENGTH = 4096;
 
         }else if (strpos($text,'%') !== false) {
           $option1= explode("%", $text);
-          
+
           $reply = $data->get_connection(utf8_encode($option1[0]),utf8_encode($option1[1]),$option1[2]);
 
         }else {

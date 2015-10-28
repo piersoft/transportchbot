@@ -130,30 +130,15 @@ if ($parsed_json->{'stationboard'}[0]->{'name'} == NULL){
           $timec =gmdate('H:i:s d-m-Y', $timef+$ms);
 
 
+if (strpos($parsed_json->{'stationboard'}[$i]->{'name'},'BUS') !== false){
+  $temp_c1 .= "Corsa: 🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+}else $temp_c1 .= "Corsa: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
 
-    //	$temp_c1 .= $parsed_json->{'stations'}[$i]->{'name'}." distante: ".$parsed_json->{'stations'}[$i]->{'distance'};
-      $temp_c1 .= "Corsa: ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
       $temp_c1 .= "In partenza alle: ".$timec."\n";
       $temp_c1 .= "Destinazione: ".$parsed_json->{'stationboard'}[$i]->{'to'}."\n";
       $temp_c1 .= "\n";
       $counts=0;
-  //    foreach($parsed_json->{'stationboard'}[$i]->{'passList'} as $data11=>$csv11){
-  //       $counts = $counts+1;
-  //    }
-    //  echo "\n".$counts;
 
-/*
-      for ($ii=0;$ii<$counts;$ii++){
-        $time1 =$parsed_json->{'stationboard'}[$i]->{'passList'}[$ii]->{'arrivalTimestamp'}; //registro nel DB anche il tempo unix
-      //  echo "\n<br>timestamp:".$time1."senza pulizia dati";
-        $timef1=floatval($time1);
-        $timeff1 = time();
-        $timec1 =gmdate('H:i:s d-m-Y', $timef1+$ms);
-        $temp_c1 .=$parsed_json->{'stationboard'}[$i]->{'passList'}[$ii]->{'station'}->{'name'};
-        $temp_c1 .= " arrivo previsto alle: ".$timec1."\n";
-
-      }
-*/
       }
       $temp_c1 .="Se digiti /".$where." avrai tutti i treni completi di tutte le fermate ed orari intermedi verso la destinazione.";
       echo $temp_c1;
@@ -217,10 +202,10 @@ if ($parsed_json->{'stationboard'}[0]->{'name'} == NULL){
           $timeff = time();
           $timec =gmdate('H:i:s d-m-Y', $timef+$ms);
 
+          if (strpos($parsed_json->{'stationboard'}[$i]->{'name'},'BUS') !== false){
+            $temp_c1 .= "\nCorsa: 🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+          }else $temp_c1 .= "\nCorsa: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
 
-
-    //	$temp_c1 .= $parsed_json->{'stations'}[$i]->{'name'}." distante: ".$parsed_json->{'stations'}[$i]->{'distance'};
-      $temp_c1 .= "\nCorsa: ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
       $temp_c1 .= "In partenza alle: ".$timec."\n";
       $temp_c1 .= "Destinazione: ".$parsed_json->{'stationboard'}[$i]->{'to'}."\n";
       $temp_c1 .= "Passa da:\n";
