@@ -61,7 +61,7 @@ const MAX_LENGTH = 4096;
  }
  else if ($text == "/start"){
 
-   $reply = ("Benvenuto, chiedi pure");
+   $reply = ("Benvenuto, selezione un comando oppure digita il nome della stazione");
    $content = array('chat_id' => $chat_id, 'text' => $reply,'disable_web_page_preview'=>true);
    $telegram->sendMessage($content);
    $log=$today. ";start sent;" .$chat_id. "\n";

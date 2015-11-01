@@ -131,8 +131,8 @@ if ($parsed_json->{'stationboard'}[0]->{'name'} == NULL){
 
 
 if (strpos($parsed_json->{'stationboard'}[$i]->{'name'},'BUS') !== false){
-  $temp_c1 .= "Corsa: 🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
-}else $temp_c1 .= "Corsa: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+  $temp_c1 .= "🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+}else $temp_c1 .= "Treno: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
 
       $temp_c1 .= "In partenza alle: ".$timec."\n";
       $temp_c1 .= "Destinazione: ".$parsed_json->{'stationboard'}[$i]->{'to'}."\n";
@@ -203,8 +203,8 @@ if (strpos($parsed_json->{'stationboard'}[$i]->{'name'},'BUS') !== false){
           $timec =gmdate('H:i:s d-m-Y', $timef+$ms);
 
           if (strpos($parsed_json->{'stationboard'}[$i]->{'name'},'BUS') !== false){
-            $temp_c1 .= "\nCorsa: 🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
-          }else $temp_c1 .= "\nCorsa: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+            $temp_c1 .= "\n🚌 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
+          }else $temp_c1 .= "\nTreno: 🚄 ".$parsed_json->{'stationboard'}[$i]->{'name'}."\n";
 
       $temp_c1 .= "In partenza alle: ".$timec."\n";
       $temp_c1 .= "Destinazione: ".$parsed_json->{'stationboard'}[$i]->{'to'}."\n";
